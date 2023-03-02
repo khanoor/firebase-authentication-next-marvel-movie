@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  
   String CurrentDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
   Future<void> getCurrent(BuildContext context) async {
     final DateTime? date = await showDatePicker(
@@ -30,12 +27,12 @@ class _HomeState extends State<Home> {
   }
 
   List data = [];
-
+  var convert_data_to_json;
   Future<String?> getmovie() async {
     var response = await http.get(
       Uri.parse('https://www.whenisthenextmcufilm.com/api'),
     );
-    var convert_data_to_json = json.decode(response.body);
+    convert_data_to_json = json.decode(response.body);
 
     setState(() {
       data.add(convert_data_to_json);
@@ -138,7 +135,7 @@ class _HomeState extends State<Home> {
                       child: Column(
                         children: [
                           Text(
-                            data[0]['title'],
+                            convert_data_to_json['title'],
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
